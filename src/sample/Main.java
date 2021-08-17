@@ -3,7 +3,7 @@ package sample;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -18,49 +18,44 @@ public class Main extends Application {
     }
 
     public static void build(Stage stage){
-        Label label1 = new Label();
+        TextField textField = new TextField();
+        textField.setPrefColumnCount(10);
+        textField.setMinWidth(10);
 
-        Button zeroBT = new Button("0");
-        zeroBT.setOnAction(event -> label1.setText(label1.getText() + "0"));
-
-        Button oneBT = new Button("1");
-        oneBT.setOnAction(event -> label1.setText(label1.getText() + "1"));
-
-        Button twoBT = new Button("2");
-        twoBT.setOnAction(event -> label1.setText(label1.getText() + "2"));
-
-        Button threeBT = new Button("3");
-        threeBT.setOnAction(event -> label1.setText(label1.getText() + "3"));
-
-        Button fourBT = new Button("4");
-        fourBT.setOnAction(event -> label1.setText(label1.getText() + "4"));
-
-        Button fiveBT = new Button("5");
-        fiveBT.setOnAction(event -> label1.setText(label1.getText() + "5"));
-
-        Button sixBT = new Button("6");
-        sixBT.setOnAction(event -> label1.setText(label1.getText() + "6"));
-
-        Button sevenBT = new Button("7");
-        sevenBT.setOnAction(event -> label1.setText(label1.getText() + "7"));
-
-        Button eightBT = new Button("8");
-        eightBT.setOnAction(event -> label1.setText(label1.getText() + "8"));
-
-        Button nineBT = new Button("9");
-        nineBT.setOnAction(event -> label1.setText(label1.getText() + "9"));
+        Button[] digitsBT = new Button[10];
+        HBox h1 = new HBox();
+        HBox h2 = new HBox();
+        HBox h3 = new HBox();
+        HBox h4 = new HBox();
+        for (int i = 0; i<digitsBT.length; i++){
+            Integer iWrapper = new Integer(i);
+            digitsBT[i] = new Button(i + "");
+            digitsBT[i].setOnAction(event -> textField.appendText(iWrapper.toString()));
+            if(i > 6 && i<=9) {
+                h1.getChildren().addAll(digitsBT[i]);
+            }
+            else if(i>3 && i<7) {
+                h2.getChildren().addAll(digitsBT[i]);
+            }
+            else if(i>0 && i<4) {
+                h3.getChildren().addAll(digitsBT[i]);
+            }
+            else {
+                h4.getChildren().addAll(digitsBT[i]);
+            }
+        }
 
         Button addBT = new Button("+");
-        addBT.setOnAction(event -> label1.setText(label1.getText() + "*"));
+        addBT.setOnAction(event -> textField.appendText("+"));
 
         Button subtractBT = new Button("-");
-        subtractBT.setOnAction(event -> label1.setText(label1.getText() + "-"));
+        subtractBT.setOnAction(event -> textField.appendText("-"));
 
         Button multiplyBT = new Button("*");
-        multiplyBT.setOnAction(event -> label1.setText(label1.getText() + "*"));
+        multiplyBT.setOnAction(event -> textField.appendText("*"));
 
         Button divideBT = new Button("/");
-        divideBT.setOnAction(event -> label1.setText(label1.getText() + "/"));
+        divideBT.setOnAction(event -> textField.appendText("/"));
 
         Button equalsBT = new Button("=");
         equalsBT.setOnAction(event -> {
@@ -68,19 +63,9 @@ public class Main extends Application {
         });
 
         Button clearBT = new Button("C");
-        clearBT.setOnAction(event -> label1.setText(""));
+        clearBT.setOnAction(event -> textField.clear());
 
-        HBox h1 = new HBox();
-        h1.getChildren().addAll(sevenBT, eightBT, nineBT);
-
-        HBox h2 = new HBox();
-        h2.getChildren().addAll(fourBT, fiveBT, sixBT);
-
-        HBox h3 = new HBox();
-        h3.getChildren().addAll(oneBT, twoBT, threeBT);
-
-        HBox h4 = new HBox();
-        h4.getChildren().addAll(clearBT, zeroBT, equalsBT);
+        h4.getChildren().addAll(clearBT, equalsBT);
 
         VBox v1 = new VBox();
         v1.getChildren().addAll(h1, h2, h3, h4);
@@ -92,7 +77,7 @@ public class Main extends Application {
         h5.getChildren().addAll(v1, v2);
 
         VBox root = new VBox();
-        root.getChildren().addAll(label1, h5);
+        root.getChildren().addAll(textField, h5);
 
         Scene scene = new Scene(root, 500, 400);
 
